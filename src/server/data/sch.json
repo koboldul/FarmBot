@@ -1,0 +1,36 @@
+{
+	"devices": [
+		{
+			"name": "pump",
+			"is_on": 1,	
+			"id": "p",
+			"pin": 22,
+			"weather_dependent": 0,
+			"time": [
+				{"id": 1, "start" : "9:00", "stop": "15:30", "skip_days": "1"},
+				{"id": 2, "start" : "23:00", "stop": "2:00", "skip_days": "1"}	
+			]
+		},
+		{
+			"name": "vegetables",
+			"weather_dependent": 1,
+			"is_on": 1,
+			"id": "v",
+			"pin": 4,
+			"time": [ 
+				{"id": 1, "start" : "5:45", "stop": "6:00", "skip_days": "1"},
+				{"id": 2, "start" : "21:45", "stop": "22:00", "skip_days": "1"}
+			]
+		},
+		{
+			"name": "sprinkler",
+			"weather_dependent": 1,
+			"is_on": 1, 
+			"pin": 17,
+			"id": "k",
+			"time":  [
+				{"id": 1, "start" : "22:01", "stop": "22:17", "skip_days": "3"}
+			]
+		}
+	]
+}

@@ -1,0 +1,13 @@
+*.log
+*.log.*
+*.pyc
+*.out
+.secret
+.env
+__pycache__
+build
+node_modules
+bin
+lib
+
+
