@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <title>Farm Boy</title>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 

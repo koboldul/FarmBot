@@ -1,12 +1,9 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import CmdsDash from '@/components/CmdsDash';
-import Schedule from '@/components/Schedule';
+import { createRouter, createWebHashHistory } from 'vue-router';
+import CmdsDash from '@/components/CmdsDash.vue';
+import Schedule from '@/components/Schedule.vue';
 
-
-Vue.use(Router);
-
-export default new Router({
+export default createRouter({
+  history: createWebHashHistory(),
   routes: [
     {
       path: '/Schedule',
@@ -19,5 +16,4 @@ export default new Router({
       component: CmdsDash,
     },
   ],
-  mode: 'hash',
 });

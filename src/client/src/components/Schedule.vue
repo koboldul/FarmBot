@@ -1,31 +1,62 @@
 <template>
   <div class="container">
     <h2>FarmBot</h2>
-    <alert :message="msg" v-if="showMessage" :status="status" />
+    <alert
+      v-if="showMessage"
+      :message="msg"
+      :status="status"
+    />
     <div class="row">
       <div class="col-sm-10">
         <br>
-        <button type="button" class="btn btn-success btn-sm"
-        @click="getLogs()">View logs</button>
-        <button type="button" class="btn btn-warning btn-sm">Check weather</button>
-        <button type="button" class="btn btn-danger btn-sm"
-           @click="toggleDevice(false, 'all')">Stop all</button>
+        <button
+          type="button"
+          class="btn btn-success btn-sm"
+          @click="getLogs()"
+        >
+          View logs
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning btn-sm"
+        >
+          Check weather
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger btn-sm"
+          @click="toggleDevice(false, 'all')"
+        >
+          Stop all
+        </button>
         <br>
         <br>
         <table class="table table-hover">
           <thead>
             <tr>
-              <th scope="col">Device</th>
-              <th scope="col">Pin</th>
-              <th scope="col">Active</th>
-              <th scope="col">Weather</th>
-              <th></th>
-              <th scope="col">Time schedule</th>
-
+              <th scope="col">
+                Device
+              </th>
+              <th scope="col">
+                Pin
+              </th>
+              <th scope="col">
+                Active
+              </th>
+              <th scope="col">
+                Weather
+              </th>
+              <th />
+              <th scope="col">
+                Time schedule
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(device, index) in devices" :key="index">
+            <tr
+              v-for="(device, index) in devices"
+              :key="index"
+            >
               <td>{{ device.name }}</td>
               <td>{{ device.pin }}</td>
 
@@ -36,68 +67,132 @@
               <td>
                 <span v-if="device.weather_dependent">Yes</span>
                 <span v-else>No</span>
-                </td>
+              </td>
               <td>
-                <button type="button" class="btn btn-success btn-sm"
-                 @click="toggleDevice(true, device.id)">
+                <button
+                  type="button"
+                  class="btn btn-success btn-sm"
+                  @click="toggleDevice(true, device.id)"
+                >
                   Start
                 </button>
 
-                <button type="button" class="btn btn-success btn-sm">A</button>
-                <button type="button" class="btn btn-warning btn-sm">U</button>
-                <button type="button" class="btn btn-danger btn-sm">D</button>
+                <button
+                  type="button"
+                  class="btn btn-success btn-sm"
+                >
+                  A
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-warning btn-sm"
+                >
+                  U
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm"
+                >
+                  D
+                </button>
               </td>
-            <td colspan="5">
-              <table class="table">
-                            <thead>
-                            <tr>
-                              <th scope="col">Start</th>
-                              <th scope="col">End</th>
-                              <th scope="col">Frequency(days)</th>
-                              <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                              <tr v-for="(ts) in device.time" :key="ts.id">
-                                <td>{{ ts.start }}</td>
-                                <td>{{ ts.stop }}</td>
-                                <td>{{ ts.skip_days }}</td>
-                                <td>
-                                  <button type="button" class="btn btn-warning btn-sm">U</button>
-                                  <button type="button" class="btn btn-danger btn-sm">D</button>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-            </td>
-             
+              <td colspan="5">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">
+                        Start
+                      </th>
+                      <th scope="col">
+                        End
+                      </th>
+                      <th scope="col">
+                        Frequency(days)
+                      </th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="(ts) in device.time"
+                      :key="ts.id"
+                    >
+                      <td>{{ ts.start }}</td>
+                      <td>{{ ts.stop }}</td>
+                      <td>{{ ts.skip_days }}</td>
+                      <td>
+                        <button
+                          type="button"
+                          class="btn btn-warning btn-sm"
+                        >
+                          U
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-danger btn-sm"
+                        >
+                          D
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <b-modal ref="viewLogsModal"
-             id="logs-modal"
-             title="Log viewer"
-             
-             hide-footer>
-        <b-form-textarea id="txtMessage"
-                     plaintext :value="logs"
-                     placeholder=""
-                     :rows="10"
-                     :max-rows="100">
-        </b-form-textarea>
-
-    </b-modal>
+    <div
+      v-if="showLogsModal"
+      id="logs-modal"
+      class="modal d-block"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="logs-modal-title"
+      @click.self="showLogsModal = false"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5
+              id="logs-modal-title"
+              class="modal-title"
+            >
+              Log viewer
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              aria-label="Close"
+              @click="showLogsModal = false"
+            />
+          </div>
+          <div class="modal-body">
+            <textarea
+              id="txtMessage"
+              class="form-control"
+              :value="logs"
+              rows="10"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+      <div class="modal-backdrop show" />
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import Alert from './Alert'
-import TextViewer from './TextViewer'
+import Alert from './Alert.vue';
 
 export default {
+    name: 'DeviceSchedule',
+    components: {
+      alert: Alert
+    },
     data() {
         return {
             devices: [],
@@ -105,11 +200,12 @@ export default {
             msg: '',
             showMessage: false,
             status: '',
-            logs: ''
+            logs: '',
+            showLogsModal: false,
         };
     },
-    components: {
-      alert: Alert
+    created() {
+        this.getSchedule();
     },
     methods: {
         getSchedule() {
@@ -119,7 +215,6 @@ export default {
                   this.devices = res.data.devices;
               })
               .catch((error) => {
-                  // eslint-disable-next-line
                   console.error(error);
               });
         },
@@ -129,29 +224,30 @@ export default {
               .then((res) => {
                   this.logs = res.data.logs;
 
-                  this.$refs.viewLogsModal.show();
+                  this.showLogsModal = true;
               })
               .catch((error) => {
-                  // eslint-disable-next-line
                   console.error(error);
               });
         },
         toggleDevice(start, id) {
           const path = `${this.url}/toggle_device`;
-          axios.post(path, {"id": id, "should_start": `${start}`})
+          axios.post(path, { id, should_start: `${start}` })
               .then((res) => {
-                  this.msg = `${res.data.status} Device ${id} ${start ? 'started':'stopped'}`;
-                  this.showMessage = true
-                  this.status = 'success'
+                  this.msg = `${res.data.status} Device ${id} ${start ? 'started' : 'stopped'}`;
+                  this.showMessage = true;
+                  this.status = 'success';
               })
               .catch((error) => {
-                  // eslint-disable-next-line
                   console.error(error);
               });
         },
     },
-    created() {
-        this.getSchedule();
-    },
-}
+};
 </script>
+
+<style scoped>
+.modal-dialog {
+  z-index: 1055;
+}
+</style>

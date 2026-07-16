@@ -4,27 +4,24 @@
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
-npm install
+npm ci
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at http://localhost:8080
 npm run dev
 
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+# lint the application
+npm run lint
 
 # run unit tests
 npm run unit
 
-# run e2e tests
+# run browser tests (install Chromium once with `npx playwright install chromium`)
 npm run e2e
 
-# run all tests
-npm test
+# build for production
+npm run build
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Node.js 20.19+, 22.13+, or 24+ is required.

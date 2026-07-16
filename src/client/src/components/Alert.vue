@@ -1,13 +1,28 @@
 <template>
   <div>
-    <b-alert    :variant="status" show>{{ message }}</b-alert>
+    <div
+      class="alert"
+      :class="`alert-${status}`"
+      role="alert"
+    >
+      {{ message }}
+    </div>
     <br>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['message', 'status'],
-
+  name: 'StatusAlert',
+  props: {
+    message: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+    },
+  },
 };
 </script>
